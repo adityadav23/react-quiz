@@ -1,8 +1,8 @@
 
 function Main({children}){
-    return <div>
+    return <main className="main">
         {children}
-    </div>
+    </main >
 }
 
 export default Main
