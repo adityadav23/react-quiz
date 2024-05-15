@@ -7,6 +7,7 @@ import StartScreen from './StartScreen';
 import Question from './Question';
 import NextQuestion from './NextQuestion';
 import Progress from './Progress';
+import Finish from './Finish';
 
 
 const STATUS = {
@@ -56,6 +57,11 @@ function reducer(state, action){
         index: state.index +1,
         answer: null
       }
+    case 'finishQuiz':
+      return {
+        ...state,
+        status: STATUS['finished']
+      }
     default: 
       throw new Error("Unknown action")
   }
@@ -99,8 +105,12 @@ function App() {
               answer={answer}
               dispatch={dispatch}
             />
-            <NextQuestion dispatch={dispatch} answer={answer}></NextQuestion>
+            <NextQuestion dispatch={dispatch} answer={answer} index={index} numQuestions={numQuestions}></NextQuestion>
           </>
+        )}
+        {status == STATUS['finished'] && (
+          <Finish points={points} maxPoints={maxPoints} dispatch={dispatch}
+          />
         )}
       </Main>
     </div>
