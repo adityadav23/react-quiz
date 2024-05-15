@@ -25,7 +25,7 @@ const initialState = {
   index:0,
   answer: null,
   points: 0,
-  secondsRemaining:10
+  secondsRemaining:60
 
 }
 
