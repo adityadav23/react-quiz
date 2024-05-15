@@ -8,6 +8,8 @@ import Question from './Question';
 import NextQuestion from './NextQuestion';
 import Progress from './Progress';
 import Finish from './Finish';
+import Timer from './Timer';
+import Footer from './Footer';
 
 
 const STATUS = {
@@ -22,7 +24,8 @@ const initialState = {
   status: STATUS['loading'], // 
   index:0,
   answer: null,
-  points: 0
+  points: 0,
+  secondsRemaining:10
 
 }
 
@@ -62,13 +65,21 @@ function reducer(state, action){
         ...state,
         status: STATUS['finished']
       }
+    case 'restart':
+      return {...initialState, questions: state.questions, status:  STATUS['ready']};
+    case 'timer': 
+      return {
+         ...state,
+         secondsRemaining: state.secondsRemaining - 1,
+         status : state.secondsRemaining === 0 ? STATUS['finished'] : state.status
+         };
     default: 
       throw new Error("Unknown action")
   }
 }
 function App() {
 
-  const [{questions, status, index, answer, points}, dispatch] = useReducer(reducer, initialState);
+  const [{questions, status, index, answer, points, secondsRemaining}, dispatch] = useReducer(reducer, initialState);
   const numQuestions = questions.length;
   const maxPoints = questions.reduce((prev, current) => {
     return current.points + prev;
@@ -105,7 +116,10 @@ function App() {
               answer={answer}
               dispatch={dispatch}
             />
-            <NextQuestion dispatch={dispatch} answer={answer} index={index} numQuestions={numQuestions}></NextQuestion>
+            <Footer>
+              <Timer  dispatch={dispatch} secondsRemaining={secondsRemaining} />
+              <NextQuestion dispatch={dispatch} answer={answer} index={index} numQuestions={numQuestions}></NextQuestion>
+            </Footer>
           </>
         )}
         {status == STATUS['finished'] && (
