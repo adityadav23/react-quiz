@@ -1,5 +1,4 @@
-[# Getting Started with Create React App
-](https://adityadav23.github.io/react-quiz/)
+https://adityadav23.github.io/react-quiz
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
